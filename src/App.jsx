@@ -1019,11 +1019,8 @@ export default function App() {
                   const wc = waitColor(wait);
                   const lm = LAND_META[ride.land];
                   const hasLiveData = liveWaits[ride.id] != null;
-              const nowHour = getEasternHour();
-              const rideHour = item.startMins / 60;
-              const isWithin60 = Math.abs(rideHour - nowHour) <= 1.0;
-              const showLive = hasLiveData && isWithin60;
-              const showEst = !showLive;
+                  const showLive = hasLiveData;
+                  const showEst = !showLive;
                   return (
                     <div key={ride.id} style={{marginBottom:6, borderRadius:11, background:"rgba(255,255,255,0.02)", border:`1px solid ${al(wc,0.12)}`, padding:"9px 12px", display:"flex", alignItems:"center", gap:10}}>
                       <div style={{width:38, textAlign:"center", flexShrink:0}}>
