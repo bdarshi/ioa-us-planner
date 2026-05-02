@@ -46,8 +46,8 @@ const LAND_META = {
 // ─── RIDES ───────────────────────────────────────────────────────────────────
 const RIDES = [
   // IOA
-  { id:"hagrids",    name:"Hagrid's Motorbike Adventure",       land:"Hogsmeade",     park:"ioa",     minH:48, express:false, single:false, dur:7,  thrill:true,  day1:1,  day2:null,
-    tip:"No Express — rope drop is your ONLY option. Wait triples to 120min+ by 10am. First ride, no exceptions." },
+  { id:"hagrids",    name:"Hagrid's Motorbike Adventure",       land:"Hogsmeade",     park:"ioa",     minH:48, express:true,  single:false, dur:7,  thrill:true,  day1:1,  day2:null,
+    tip:"Express Pass works here. Still worth rope-dropping — waits hit 120min+ by 10am and Express lines get long too. Go first." },
   { id:"hippogriff", name:"Flight of the Hippogriff",           land:"Hogsmeade",     park:"ioa",     minH:36, express:true,  single:false, dur:2,  thrill:false, day1:2,  day2:null,
     tip:"Quick junior coaster right in Hogsmeade — do it immediately after Hagrid's while you're already there." },
   { id:"trolley",    name:"High in the Sky Seuss Trolley Train", land:"Seuss Landing", park:"ioa",     minH:36, express:true,  single:false, dur:5,  thrill:false, day1:3,  day2:null,
@@ -550,35 +550,37 @@ export default function App() {
               const n = apiRide.name?.toLowerCase() || "";
               // Precise lookup table based on actual queue-times API names
               let id = null;
-              if (n.includes("velocicoaster"))                          id = "veloci";
-              else if (n.includes("hagrid") && !n.includes("single"))   id = "hagrids";
-              else if (n.includes("forbidden journey") && !n.includes("single")) id = "forbidden";
-              else if (n.includes("flight of the hippogriff"))          id = "hippogriff";
-              else if (n.includes("hogwarts") && n.includes("hogsmeade")) id = "hogex_ioa";
-              else if (n.includes("hogwarts") && n.includes("king"))    id = "hogex_st";
-              else if (n.includes("pteranodon"))                        id = "ptero";
-              else if (n.includes("reign of kong"))                     id = "kong";
-              else if (n.includes("incredible hulk") && !n.includes("single")) id = "hulk";
-              else if (n.includes("spider-man") && !n.includes("single")) id = "spiderman";
-              else if (n.includes("doctor doom"))                       id = "doom";
-              else if (n.includes("storm force"))                       id = "stormforce";
-              else if (n.includes("dudley"))                            id = "dudley";
-              else if (n.includes("bilge-rat"))                         id = "bilge";
-              else if (n.includes("cat in the hat") || n.includes("cat in the hat")) id = "cathat";
-              else if (n.includes("trolley train"))                     id = "trolley";
-              else if (n.includes("one fish"))                          id = "onefish";
-              else if (n.includes("caro-seuss"))                        id = "caroSeuss";
-              else if (n.includes("gringotts"))                         id = "gringotts";
-              else if (n.includes("revenge of the mummy"))              id = "mummy";
-              else if (n.includes("transformers"))                      id = "transformers";
-              else if (n.includes("minion mayhem"))                     id = "minion";
-              else if (n.includes("villain-con") || n.includes("minion blast")) id = "villaincon";
-              else if (n.includes("men in black"))                      id = "mib";
-              else if (n.includes("simpsons ride"))                     id = "simpsons";
-              else if (n.includes("jimmy fallon") || n.includes("race through new york")) id = "fallon";
-              else if (n.includes("e.t. adventure") || n.includes("et adventure")) id = "et";
-              else if (n.includes("trolls trollercoaster"))             id = "trollscoast";
-              else if (n.includes("kang") && n.includes("twirl"))       id = "kang";
+              // IOA
+              if      (n.includes("velocicoaster"))                                    id = "veloci";
+              else if (n.includes("hagrid") && !n.includes("single"))                  id = "hagrids";
+              else if (n.includes("forbidden journey") && !n.includes("single"))       id = "forbidden";
+              else if (n.includes("flight of the hippogriff"))                         id = "hippogriff";
+              else if (n.includes("hogwarts") && n.includes("hogsmeade"))              id = "hogex_ioa";
+              else if (n.includes("hogwarts") && n.includes("king"))                   id = "hogex_st";
+              else if (n.includes("pteranodon"))                                        id = "ptero";
+              else if (n.includes("reign of kong"))                                     id = "kong";
+              else if (n.includes("incredible hulk") && !n.includes("single"))         id = "hulk";
+              else if (n.includes("spider-man") && !n.includes("single"))              id = "spiderman";
+              else if (n.includes("doctor doom"))                                       id = "doom";
+              else if (n.includes("storm force"))                                       id = "stormforce";
+              else if (n.includes("dudley"))                                            id = "dudley";
+              else if (n.includes("bilge-rat"))                                         id = "bilge";
+              else if (n.includes("cat in the hat"))                                    id = "cathat";
+              else if (n.includes("trolley train"))                                     id = "trolley";
+              else if (n.includes("one fish"))                                          id = "onefish";
+              else if (n.includes("caro-seuss"))                                        id = "caroSeuss";
+              // Studios
+              else if (n.includes("escape from gringotts") && !n.includes("single"))   id = "gringotts";
+              else if (n.includes("revenge of the mummy") && !n.includes("single"))    id = "mummy";
+              else if (n.includes("transformers"))                                       id = "transformers";
+              else if (n.includes("minion mayhem"))                                     id = "minion";
+              else if (n.includes("villain-con") || n.includes("minion blast"))         id = "villaincon";
+              else if (n.includes("men in black") && !n.includes("single"))             id = "mib";
+              else if (n.includes("simpsons ride"))                                     id = "simpsons";
+              else if (n.includes("race through new york") || n.includes("jimmy fallon")) id = "fallon";
+              else if (n.includes("e.t. adventure"))                                    id = "et";
+              else if (n.includes("trolls trollercoaster"))                             id = "trollscoast";
+              else if (n.includes("kang") && n.includes("twirl"))                      id = "kang";
               if (id && apiRide.wait_time != null) results[id] = apiRide.wait_time;
             });
           });
@@ -782,7 +784,12 @@ export default function App() {
               const lm = LAND_META[ride.land];
               const parkColor = PARK[ride.park]?.color || "#818CF8";
               const isExp = expandedId === item.id;
-              const isLive = liveWaits[ride.id] != null;
+              const hasLiveData = liveWaits[ride.id] != null;
+              const nowHour = getEasternHour();
+              const rideHour = item.startMins / 60;
+              const isWithin60 = Math.abs(rideHour - nowHour) <= 1.0;
+              const showLive = hasLiveData && isWithin60;
+              const showEst = !showLive;
 
               return (
                 <div key={item.id} className="fade-up" style={{marginBottom:9, animationDelay:`${Math.min(idx*0.02,0.3)}s`}}>
@@ -801,7 +808,8 @@ export default function App() {
                       }}>
                         <div style={{fontSize:13, fontWeight:900, color:wc, fontFamily:"monospace", lineHeight:1}}>{wait===0?"—":`${wait}`}</div>
                         {wait>0 && <div style={{fontSize:7, color:wc, fontWeight:700}}>min</div>}
-                        {isLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                        {showLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                        {showEst && wait>0 && <div style={{fontSize:7, color:"#60A5FA", fontWeight:800}}>EST</div>}
                       </div>
 
                       {/* Name + chips */}
@@ -810,7 +818,7 @@ export default function App() {
                         <div style={{display:"flex", gap:4, flexWrap:"wrap", alignItems:"center"}}>
                           <Chip label={`${lm?.emoji||""} ${lm?.short||ride.land}`} color={lm?.color||"#818CF8"} size="xs"/>
                           {ride.minH>0 && <Chip label={`${ride.minH}"+`} color="#94A3B8" size="xs"/>}
-                          {!ride.express && ride.minH>0 && <Chip label="No Express" color="#F87171" size="xs"/>}
+                          {!ride.express && <Chip label="No Express" color="#F87171" size="xs"/>}
                           {config.hasExpress && ride.express && <Chip label="⚡ Express" color="#F87171" size="xs"/>}
                           {ride.single && <Chip label="👤 Single rider" color="#818CF8" size="xs"/>}
                           {ride.maxH && <Chip label={`Max ${ride.maxH}"`} color="#FBBF24" size="xs"/>}
@@ -875,7 +883,12 @@ export default function App() {
                       const wait = liveWaits[ride.id] ?? getHistoricalWait(ride.id, getEasternHour(), config.hasExpress);
                       const wc = waitColor(wait);
                       const lm = LAND_META[ride.land];
-                      const isLive = liveWaits[ride.id] != null;
+                      const hasLiveData = liveWaits[ride.id] != null;
+              const nowHour = getEasternHour();
+              const rideHour = item.startMins / 60;
+              const isWithin60 = Math.abs(rideHour - nowHour) <= 1.0;
+              const showLive = hasLiveData && isWithin60;
+              const showEst = !showLive;
                       return (
                         <div key={ride.id} style={{
                           display:"flex", alignItems:"center", gap:10, padding:"10px 14px",
@@ -885,7 +898,8 @@ export default function App() {
                           <div style={{width:36, textAlign:"center", flexShrink:0}}>
                             <div style={{fontSize:13, fontWeight:900, color:wc, fontFamily:"monospace", lineHeight:1}}>{wait===0?"—":`${wait}`}</div>
                             {wait>0 && <div style={{fontSize:7, color:wc, fontWeight:700}}>min</div>}
-                            {isLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                            {showLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                        {showEst && wait>0 && <div style={{fontSize:7, color:"#60A5FA", fontWeight:800}}>EST</div>}
                           </div>
                           <div style={{flex:1, minWidth:0}}>
                             <div style={{fontSize:12, fontWeight:800, color:"#94a3b8", marginBottom:3}}>{ride.name}</div>
@@ -1007,13 +1021,19 @@ export default function App() {
                   const wait = liveWaits[ride.id] ?? getHistoricalWait(ride.id, getEasternHour(), config.hasExpress);
                   const wc = waitColor(wait);
                   const lm = LAND_META[ride.land];
-                  const isLive = liveWaits[ride.id] != null;
+                  const hasLiveData = liveWaits[ride.id] != null;
+              const nowHour = getEasternHour();
+              const rideHour = item.startMins / 60;
+              const isWithin60 = Math.abs(rideHour - nowHour) <= 1.0;
+              const showLive = hasLiveData && isWithin60;
+              const showEst = !showLive;
                   return (
                     <div key={ride.id} style={{marginBottom:6, borderRadius:11, background:"rgba(255,255,255,0.02)", border:`1px solid ${al(wc,0.12)}`, padding:"9px 12px", display:"flex", alignItems:"center", gap:10}}>
                       <div style={{width:38, textAlign:"center", flexShrink:0}}>
                         <div style={{fontSize:14, fontWeight:900, color:wc, fontFamily:"monospace", lineHeight:1}}>{wait===0?"—":`${wait}`}</div>
                         {wait>0 && <div style={{fontSize:7, color:wc, fontWeight:700}}>min</div>}
-                        {isLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                        {showLive && <div style={{fontSize:7, color:"#34D399", fontWeight:800}}>LIVE</div>}
+                        {showEst && wait>0 && <div style={{fontSize:7, color:"#60A5FA", fontWeight:800}}>EST</div>}
                       </div>
                       <div style={{flex:1, minWidth:0}}>
                         <div style={{fontSize:12, fontWeight:800, color:"#e2e8f0", marginBottom:2}}>{ride.name}</div>
