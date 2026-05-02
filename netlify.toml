@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/api/waittimes"
+  to = "/.netlify/functions/waittimes"
+  status = 200
