@@ -547,10 +547,39 @@ export default function App() {
         if (data.lands) {
           data.lands.forEach(land => {
             land.rides?.forEach(apiRide => {
-              const matched = RIDES.find(r =>
-                apiRide.name?.toLowerCase().includes(r.name.toLowerCase().split(" ")[0].toLowerCase())
-              );
-              if (matched && apiRide.wait_time != null) results[matched.id] = apiRide.wait_time;
+              const n = apiRide.name?.toLowerCase() || "";
+              // Precise lookup table based on actual queue-times API names
+              let id = null;
+              if (n.includes("velocicoaster"))                          id = "veloci";
+              else if (n.includes("hagrid") && !n.includes("single"))   id = "hagrids";
+              else if (n.includes("forbidden journey") && !n.includes("single")) id = "forbidden";
+              else if (n.includes("flight of the hippogriff"))          id = "hippogriff";
+              else if (n.includes("hogwarts") && n.includes("hogsmeade")) id = "hogex_ioa";
+              else if (n.includes("hogwarts") && n.includes("king"))    id = "hogex_st";
+              else if (n.includes("pteranodon"))                        id = "ptero";
+              else if (n.includes("reign of kong"))                     id = "kong";
+              else if (n.includes("incredible hulk") && !n.includes("single")) id = "hulk";
+              else if (n.includes("spider-man") && !n.includes("single")) id = "spiderman";
+              else if (n.includes("doctor doom"))                       id = "doom";
+              else if (n.includes("storm force"))                       id = "stormforce";
+              else if (n.includes("dudley"))                            id = "dudley";
+              else if (n.includes("bilge-rat"))                         id = "bilge";
+              else if (n.includes("cat in the hat") || n.includes("cat in the hat")) id = "cathat";
+              else if (n.includes("trolley train"))                     id = "trolley";
+              else if (n.includes("one fish"))                          id = "onefish";
+              else if (n.includes("caro-seuss"))                        id = "caroSeuss";
+              else if (n.includes("gringotts"))                         id = "gringotts";
+              else if (n.includes("revenge of the mummy"))              id = "mummy";
+              else if (n.includes("transformers"))                      id = "transformers";
+              else if (n.includes("minion mayhem"))                     id = "minion";
+              else if (n.includes("villain-con") || n.includes("minion blast")) id = "villaincon";
+              else if (n.includes("men in black"))                      id = "mib";
+              else if (n.includes("simpsons ride"))                     id = "simpsons";
+              else if (n.includes("jimmy fallon") || n.includes("race through new york")) id = "fallon";
+              else if (n.includes("e.t. adventure") || n.includes("et adventure")) id = "et";
+              else if (n.includes("trolls trollercoaster"))             id = "trollscoast";
+              else if (n.includes("kang") && n.includes("twirl"))       id = "kang";
+              if (id && apiRide.wait_time != null) results[id] = apiRide.wait_time;
             });
           });
         }
