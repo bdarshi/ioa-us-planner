@@ -884,11 +884,8 @@ export default function App() {
                       const wc = waitColor(wait);
                       const lm = LAND_META[ride.land];
                       const hasLiveData = liveWaits[ride.id] != null;
-              const nowHour = getEasternHour();
-              const rideHour = item.startMins / 60;
-              const isWithin60 = Math.abs(rideHour - nowHour) <= 1.0;
-              const showLive = hasLiveData && isWithin60;
-              const showEst = !showLive;
+                      const showLive = hasLiveData; // add-on tray always shows live if available
+                      const showEst = !showLive;
                       return (
                         <div key={ride.id} style={{
                           display:"flex", alignItems:"center", gap:10, padding:"10px 14px",
