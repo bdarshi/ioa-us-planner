@@ -628,7 +628,10 @@ export default function App() {
               else if (n.includes("trolls trollercoaster"))                              id="trollscoast";
               else if (n.includes("kang")&&n.includes("twirl"))                         id="kang";
               if (id && apiRide.wait_time != null) {
-                results[id] = { wait: apiRide.wait_time, isOpen: apiRide.is_open ?? true };
+                // Only mark closed if is_open is explicitly false
+                // Missing/null means open — API doesn't always send this field
+                const isOpen = apiRide.is_open === false ? false : true;
+                results[id] = { wait: apiRide.wait_time, isOpen };
               }
             });
           });
